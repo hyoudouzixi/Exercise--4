@@ -1,19 +1,48 @@
-let detailY;
-// slide to see how detailY works
+let x = 0;
+let y = 0;
+let fr = 30; //starting FPS
+let clr;
+let xoff = 0.0;
+let xincrement = 0.01;
+
+
 function setup() {
-  createCanvas(1000, 1000, WEBGL);
-  detailY = createSlider(3, 16, 3);
-  detailY.position(10, height + 5);
-  detailY.style('width', '80px');
-  describe(
-    'a white sphere with low detail on the y-axis, including a slider to adjust detailY'
-  );
+  myCanvas = createCanvas(700, 480);
+  frameRate(fr); // Attempt to refresh at starting FPS
+  clr = color(0, 0, 0);
+  noStroke();
 }
 
 function draw() {
-  background(205, 105, 94);
-  rotateY(millis() / 1000);
-  rotateX(millis() / 1000);
-  sphere(40, 16, detailY.value());
+  fill(0, 10);
+  rect(0, 0, width, height);
+
+  let n = noise(xoff) * width;
+
+  // With each cycle, increment xoff
+  xoff += xincrement;
+  x = x + 5;
+  y += 5;
+  if (x > width) {
+    x = 0;
+  }
+  if (y > 255) {
+    y = 0;
+  }
+  background(150);
+  clr = color(0, y, y);
+
+  translate(0, 0);
+  fill(clr);
+  beginShape();
+  vertex(x, 0);
+  vertex(x + 10, 0); 
+  vertex(x + 20, 20); 
+  vertex(x + 10, 40); 
+  vertex(x, 40); 
+  vertex(x + 10, 20); 
+  endShape(CLOSE);
+
+
 }
 
